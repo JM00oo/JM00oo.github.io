@@ -4,9 +4,9 @@
   <subtitle>This is subtitle</subtitle>
   <link href="/atom.xml" rel="self"/>
   
-  <link href="/"/>
+  <link href="http://blog.jm00oo.io/"/>
   <updated>2017-04-15T13:06:03.000Z</updated>
-  <id>/</id>
+  <id>http://blog.jm00oo.io/</id>
   
   <author>
     <name>JM Huang</name>
@@ -17,8 +17,8 @@
   
   <entry>
     <title>Hello World</title>
-    <link href="/2017/04/15/hello-world/"/>
-    <id>/2017/04/15/hello-world/</id>
+    <link href="http://blog.jm00oo.io/2017/04/15/hello-world/"/>
+    <id>http://blog.jm00oo.io/2017/04/15/hello-world/</id>
     <published>2017-04-15T13:06:03.000Z</published>
     <updated>2017-04-15T13:06:03.000Z</updated>
     
@@ -39,17 +39,17 @@
     
     </summary>
     
-      <category term="hello-world" scheme="/categories/hello-world/"/>
+      <category term="hello-world" scheme="http://blog.jm00oo.io/categories/hello-world/"/>
     
     
-      <category term="hello-world" scheme="/tags/hello-world/"/>
+      <category term="hello-world" scheme="http://blog.jm00oo.io/tags/hello-world/"/>
     
   </entry>
   
   <entry>
     <title>Docker slave setup notes</title>
-    <link href="/2017/04/12/docker-slave/"/>
-    <id>/2017/04/12/docker-slave/</id>
+    <link href="http://blog.jm00oo.io/2017/04/12/docker-slave/"/>
+    <id>http://blog.jm00oo.io/2017/04/12/docker-slave/</id>
     <published>2017-04-11T16:00:00.000Z</published>
     <updated>2017-04-15T13:06:03.000Z</updated>
     
@@ -68,10 +68,10 @@
     
     </summary>
     
-      <category term="Tech" scheme="/categories/Tech/"/>
+      <category term="Tech" scheme="http://blog.jm00oo.io/categories/Tech/"/>
     
     
-      <category term="docker CI/CD" scheme="/tags/docker-CI-CD/"/>
+      <category term="docker CI/CD" scheme="http://blog.jm00oo.io/tags/docker-CI-CD/"/>
     
   </entry>
   
