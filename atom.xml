@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>JM&#39;s Syslog</title>
+  <subtitle>This is subtitle</subtitle>
+  <link href="/atom.xml" rel="self"/>
+  
+  <link href="http://blog.jm00oo.io/"/>
+  <updated>2017-04-15T13:06:03.000Z</updated>
+  <id>http://blog.jm00oo.io/</id>
+  
+  <author>
+    <name>JM Huang</name>
+    
+  </author>
+  
+  <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Hello World</title>
+    <link href="http://blog.jm00oo.io/2017/04/15/hello-world/"/>
+    <id>http://blog.jm00oo.io/2017/04/15/hello-world/</id>
+    <published>2017-04-15T13:06:03.000Z</published>
+    <updated>2017-04-15T13:06:03.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new <span class="string">"My New Post"</span></div></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo server</div></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo generate</div></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo deploy</div></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;Welcome to &lt;a href=&quot;https://hexo.io/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Hexo&lt;/a&gt;! This is your very first post. Check &lt;a href=&quot;https://hexo.
+    
+    </summary>
+    
+      <category term="hello-world" scheme="http://blog.jm00oo.io/categories/hello-world/"/>
+    
+    
+      <category term="hello-world" scheme="http://blog.jm00oo.io/tags/hello-world/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Docker slave setup notes</title>
+    <link href="http://blog.jm00oo.io/2017/04/12/docker-slave/"/>
+    <id>http://blog.jm00oo.io/2017/04/12/docker-slave/</id>
+    <published>2017-04-11T16:00:00.000Z</published>
+    <updated>2017-04-15T13:06:03.000Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="Install-Docker"><a href="#Install-Docker" class="headerlink" title="Install Docker"></a>Install Docker</h2><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">$ sudo apt-get install \</div><div class="line">    apt-transport-https \</div><div class="line">    ca-certificates \</div><div class="line">    curl \</div><div class="line">    software-properties-common</div><div class="line"></div><div class="line">$ curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -</div><div class="line"></div><div class="line">$ sudo apt-key fingerprint 0EBFCD88</div><div class="line"></div><div class="line">$ sudo add-apt-repository \</div><div class="line">   <span class="string">"deb [arch=amd64] https://download.docker.com/linux/ubuntu \</span></div><div class="line">   <span class="variable">$(lsb_release -cs)</span> \</div><div class="line">   stable"</div><div class="line"></div><div class="line">$ sudo apt-get update</div><div class="line"></div><div class="line">$ sudo apt-get install docker-ce</div></pre></td></tr></table></figure>
+<p>Ref: <a href="https://docs.docker.com/engine/installation/linux/ubuntu/" target="_blank" rel="external">Docker install guide</a></p>
+<h2 id="Modify-docker-config"><a href="#Modify-docker-config" class="headerlink" title="Modify docker config"></a>Modify docker config</h2><p>Modify<br><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">/lib/systemd/system/docker.service</div></pre></td></tr></table></figure></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">EnvironmentFile=-/etc/default/docker</div><div class="line">ExecStart=/usr/bin/dockerd -H fd:// <span class="variable">$DOCKER_OPTS</span></div></pre></td></tr></table></figure>
+<p>Run<br><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">$ service docker restart</div></pre></td></tr></table></figure></p>
+<h2 id="Install-Java"><a href="#Install-Java" class="headerlink" title="Install Java"></a>Install Java</h2><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">sudo apt-get install default-jre</div><div class="line">sudo apt-get install default-jdk</div></pre></td></tr></table></figure>
+<p>Ref: <a href="https://www.digitalocean.com/community/tutorials/how-to-install-java-on-ubuntu-with-apt-get" target="_blank" rel="external">Install Java</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;Install-Docker&quot;&gt;&lt;a href=&quot;#Install-Docker&quot; class=&quot;headerlink&quot; title=&quot;Install Docker&quot;&gt;&lt;/a&gt;Install Docker&lt;/h2&gt;&lt;figure class=&quot;highlight 
+    
+    </summary>
+    
+      <category term="Tech" scheme="http://blog.jm00oo.io/categories/Tech/"/>
+    
+    
+      <category term="docker CI/CD" scheme="http://blog.jm00oo.io/tags/docker-CI-CD/"/>
+    
+  </entry>
+  
+</feed>
