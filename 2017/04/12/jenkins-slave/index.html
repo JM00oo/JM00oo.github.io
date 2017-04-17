@@ -19,7 +19,7 @@
 <meta property="og:site_name" content="JM's Syslog">
 <meta property="og:description" content="In this article, I introduced how to setup a docker-host based Jenkins slave step by step from installing docker. It includes some trick of how to run docker with parameters.">
 <meta property="og:image" content="http://bit.ly/2ofKxNp">
-<meta property="og:updated_time" content="2017-04-17T03:22:39.000Z">
+<meta property="og:updated_time" content="2017-04-17T03:40:44.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Jenkins slave setup notes">
 <meta name="twitter:description" content="In this article, I introduced how to setup a docker-host based Jenkins slave step by step from installing docker. It includes some trick of how to run docker with parameters.">
@@ -125,7 +125,7 @@ var themeMenus = {};
 <div class="article-gallery">
   <div class="article-gallery-photos">
     
-      <a class="article-gallery-img fancybox" href="http://bit.ly/2ofKxNp" rel="gallery_cj1lk3n1r0001zg4j0ofnvwxt">
+      <a class="article-gallery-img fancybox" href="http://bit.ly/2ofKxNp" rel="gallery_cj1lknppt0002fr4j814mmtnf">
         <img src="http://bit.ly/2ofKxNp" itemprop="image">
       </a>
     
@@ -157,8 +157,8 @@ var themeMenus = {};
 <a id="more"></a>
 <h2 id="Install-Docker"><a href="#Install-Docker" class="headerlink" title="Install Docker"></a>Install Docker</h2><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">$ sudo apt-get install \</div><div class="line">    apt-transport-https \</div><div class="line">    ca-certificates \</div><div class="line">    curl \</div><div class="line">    software-properties-common</div><div class="line"></div><div class="line">$ curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -</div><div class="line"></div><div class="line">$ sudo apt-key fingerprint 0EBFCD88</div><div class="line"></div><div class="line">$ sudo add-apt-repository \</div><div class="line">   <span class="string">"deb [arch=amd64] https://download.docker.com/linux/ubuntu \</span></div><div class="line">   <span class="variable">$(lsb_release -cs)</span> \</div><div class="line">   stable"</div><div class="line"></div><div class="line">$ sudo apt-get update</div><div class="line"></div><div class="line">$ sudo apt-get install docker-ce</div></pre></td></tr></table></figure>
 <p>Ref: <a href="https://docs.docker.com/engine/installation/linux/ubuntu/" target="_blank" rel="external">Docker install guide</a></p>
-<h2 id="Modify-docker-config"><a href="#Modify-docker-config" class="headerlink" title="Modify docker config"></a>Modify docker config</h2><p>Add config<br><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">/etc/default/docker</div></pre></td></tr></table></figure><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">DOCKER_OPTS=<span class="string">"-H tcp://172.31.16.61:2375 --live-restore"</span></div></pre></td></tr></table></figure></p>
-<p>Modify<br><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">/lib/systemd/system/docker.service</div></pre></td></tr></table></figure><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">EnvironmentFile=-/etc/default/docker</div><div class="line">ExecStart=/usr/bin/dockerd -H fd:// <span class="variable">$DOCKER_OPTS</span></div></pre></td></tr></table></figure></p>
+<h2 id="Modify-docker-config"><a href="#Modify-docker-config" class="headerlink" title="Modify docker config"></a>Modify docker config</h2><p>Add config<br><figure class="highlight bash"><figcaption><span>/etc/default/docker</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">DOCKER_OPTS=<span class="string">"-H tcp://172.31.16.61:2375 --live-restore"</span></div></pre></td></tr></table></figure></p>
+<p>Modify<br><figure class="highlight bash"><figcaption><span>/lib/systemd/system/docker.service</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">EnvironmentFile=-/etc/default/docker</div><div class="line">ExecStart=/usr/bin/dockerd -H fd:// <span class="variable">$DOCKER_OPTS</span></div></pre></td></tr></table></figure></p>
 <p>Run<br><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">$ service docker restart</div></pre></td></tr></table></figure></p>
 <h2 id="Install-Java"><a href="#Install-Java" class="headerlink" title="Install Java"></a>Install Java</h2><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">sudo apt-get install default-jre</div><div class="line">sudo apt-get install default-jdk</div></pre></td></tr></table></figure>
 <p>Ref: <a href="https://www.digitalocean.com/community/tutorials/how-to-install-java-on-ubuntu-with-apt-get" target="_blank" rel="external">Install Java</a></p>
