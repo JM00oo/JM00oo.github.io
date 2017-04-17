@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>JM&#39;s Syslog</title>
+  <subtitle>This is subtitle</subtitle>
+  <link href="/atom.xml" rel="self"/>
+  
+  <link href="http://blog.jm00oo.io/"/>
+  <updated>2017-04-17T03:27:05.000Z</updated>
+  <id>http://blog.jm00oo.io/</id>
+  
+  <author>
+    <name>JM Huang</name>
+    
+  </author>
+  
+  <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Git submodule notes</title>
+    <link href="http://blog.jm00oo.io/2017/04/16/git-submodule-notes/"/>
+    <id>http://blog.jm00oo.io/2017/04/16/git-submodule-notes/</id>
+    <published>2017-04-16T09:36:25.000Z</published>
+    <updated>2017-04-17T03:27:05.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>In this post, I noted for setup/update git submodule. In some scenarios, we developed in a project, which depends on some other library. If we want to separately version controlling both of them, <code>git submodule</code> is a good tool for that.</p>
+<a id="more"></a>
+<p>For example, I use Hexo to manage my blog, and in the repository there is a themes module to setup the blog theme.</p>
+<h2 id="Add-submodule"><a href="#Add-submodule" class="headerlink" title="Add submodule"></a>Add submodule</h2><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><span class="built_in">cd</span> BLOG_DIR</div><div class="line">git submodule add GIT_URL themes/THEME_NAME</div></pre></td></tr></table></figure>
+<p>Suppose someone else update and push the submodule in the remote repository, we may need to update the submodule.</p>
+<h2 id="Update-submodule"><a href="#Update-submodule" class="headerlink" title="Update submodule"></a>Update submodule</h2><p>First time need to init the submodule.<br><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">git submodule update --recursive --remote --init PATH</div></pre></td></tr></table></figure><br>otherwise<br><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">git submodule update --recursive --remote</div></pre></td></tr></table></figure></p>
+<p>Sometimes, we may encounter some problem of adding submodule, i.e. <code>&#39;projectfolder&#39; already exists in the index</code>. Here is a way to fix it:</p>
+<h2 id="Fix-issue-of-adding-submodule"><a href="#Fix-issue-of-adding-submodule" class="headerlink" title="Fix issue of adding submodule"></a>Fix issue of adding submodule</h2><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">git rm --cached projectfolder</div></pre></td></tr></table></figure>
+<p>References:<br><a href="http://bit.ly/2pF1Jw6" target="_blank" rel="external">Git submodule</a><br><a href="http://bit.ly/2ojiMm4" target="_blank" rel="external">Update submodule</a><br><a href="http://bit.ly/2ppm496" target="_blank" rel="external">Fix submodule issue</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;In this post, I noted for setup/update git submodule. In some scenarios, we developed in a project, which depends on some other library. If we want to separately version controlling both of them, &lt;code&gt;git submodule&lt;/code&gt; is a good tool for that.&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="git" scheme="http://blog.jm00oo.io/tags/git/"/>
+    
+      <category term="submodule" scheme="http://blog.jm00oo.io/tags/submodule/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Jenkins slave setup notes</title>
+    <link href="http://blog.jm00oo.io/2017/04/12/jenkins-slave/"/>
+    <id>http://blog.jm00oo.io/2017/04/12/jenkins-slave/</id>
+    <published>2017-04-11T16:00:00.000Z</published>
+    <updated>2017-04-17T03:22:39.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>In this article, I introduced how to setup a docker-host based Jenkins slave step by step from installing docker. It includes some trick of how to run docker with parameters.</p>
+<a id="more"></a>
+<h2 id="Install-Docker"><a href="#Install-Docker" class="headerlink" title="Install Docker"></a>Install Docker</h2><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">$ sudo apt-get install \</div><div class="line">    apt-transport-https \</div><div class="line">    ca-certificates \</div><div class="line">    curl \</div><div class="line">    software-properties-common</div><div class="line"></div><div class="line">$ curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -</div><div class="line"></div><div class="line">$ sudo apt-key fingerprint 0EBFCD88</div><div class="line"></div><div class="line">$ sudo add-apt-repository \</div><div class="line">   <span class="string">"deb [arch=amd64] https://download.docker.com/linux/ubuntu \</span></div><div class="line">   <span class="variable">$(lsb_release -cs)</span> \</div><div class="line">   stable"</div><div class="line"></div><div class="line">$ sudo apt-get update</div><div class="line"></div><div class="line">$ sudo apt-get install docker-ce</div></pre></td></tr></table></figure>
+<p>Ref: <a href="https://docs.docker.com/engine/installation/linux/ubuntu/" target="_blank" rel="external">Docker install guide</a></p>
+<h2 id="Modify-docker-config"><a href="#Modify-docker-config" class="headerlink" title="Modify docker config"></a>Modify docker config</h2><p>Add config<br><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">/etc/default/docker</div></pre></td></tr></table></figure><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">DOCKER_OPTS=<span class="string">"-H tcp://172.31.16.61:2375 --live-restore"</span></div></pre></td></tr></table></figure></p>
+<p>Modify<br><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">/lib/systemd/system/docker.service</div></pre></td></tr></table></figure><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">EnvironmentFile=-/etc/default/docker</div><div class="line">ExecStart=/usr/bin/dockerd -H fd:// <span class="variable">$DOCKER_OPTS</span></div></pre></td></tr></table></figure></p>
+<p>Run<br><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">$ service docker restart</div></pre></td></tr></table></figure></p>
+<h2 id="Install-Java"><a href="#Install-Java" class="headerlink" title="Install Java"></a>Install Java</h2><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">sudo apt-get install default-jre</div><div class="line">sudo apt-get install default-jdk</div></pre></td></tr></table></figure>
+<p>Ref: <a href="https://www.digitalocean.com/community/tutorials/how-to-install-java-on-ubuntu-with-apt-get" target="_blank" rel="external">Install Java</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;In this article, I introduced how to setup a docker-host based Jenkins slave step by step from installing docker. It includes some trick of how to run docker with parameters.&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="Tech" scheme="http://blog.jm00oo.io/categories/Tech/"/>
+    
+    
+      <category term="docker" scheme="http://blog.jm00oo.io/tags/docker/"/>
+    
+      <category term="CI/CD" scheme="http://blog.jm00oo.io/tags/CI-CD/"/>
+    
+      <category term="Jenkins" scheme="http://blog.jm00oo.io/tags/Jenkins/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Hello World</title>
+    <link href="http://blog.jm00oo.io/2017/04/10/hello-world/"/>
+    <id>http://blog.jm00oo.io/2017/04/10/hello-world/</id>
+    <published>2017-04-09T16:00:00.000Z</published>
+    <updated>2017-04-17T03:16:54.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
+<a id="more"></a>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new <span class="string">"My New Post"</span></div></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo server</div></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo generate</div></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo deploy</div></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;Welcome to &lt;a href=&quot;https://hexo.io/&quot;&gt;Hexo&lt;/a&gt;! This is your very first post. Check &lt;a href=&quot;https://hexo.io/docs/&quot;&gt;documentation&lt;/a&gt; for more info. If you get any problems when using Hexo, you can find the answer in &lt;a href=&quot;https://hexo.io/docs/troubleshooting.html&quot;&gt;troubleshooting&lt;/a&gt; or you can ask me on &lt;a href=&quot;https://github.com/hexojs/hexo/issues&quot;&gt;GitHub&lt;/a&gt;.&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="hello-world" scheme="http://blog.jm00oo.io/categories/hello-world/"/>
+    
+    
+      <category term="hello-world" scheme="http://blog.jm00oo.io/tags/hello-world/"/>
+    
+  </entry>
+  
+</feed>
