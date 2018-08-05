@@ -7,7 +7,7 @@ tags:
 ---
 
 
-## Update submodule
+#### Update submodule
 First time need to init the submodule.
 {% codeblock line_number:false highlight:true lang:"bash" %}
 git submodule update --recursive --remote --init PATH
@@ -25,7 +25,7 @@ git submodule update --recursive --remote
 
 For example, I use Hexo to manage my blog, and in the repository there is a themes module to setup the blog theme.
 
-## Add submodule
+#### Add submodule
 {% codeblock line_number:false highlight:true lang:"bash" %}
 cd BLOG_DIR
 git submodule add GIT_URL themes/THEME_NAME
@@ -33,7 +33,7 @@ git submodule add GIT_URL themes/THEME_NAME
 
 Suppose someone else update and push the submodule in the remote repository, we may need to update the submodule.
 
-## Update submodule
+#### Update submodule
 First time need to init the submodule.
 {% codeblock line_number:false highlight:true lang:"bash" %}
 git submodule update --recursive --remote --init PATH
@@ -45,7 +45,7 @@ git submodule update --recursive --remote
 
 Sometimes, we may encounter some problem of adding submodule, i.e. ```'projectfolder' already exists in the index```. Here is a way to fix it:
 
-## Fix issue of adding submodule
+#### Fix issue of adding submodule
 {% codeblock line_number:false highlight:true lang:"bash" %}
 git rm --cached projectfolder
 {% endcodeblock %}

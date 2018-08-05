@@ -8,11 +8,11 @@ date: 2017-04-19 13:46:47
 ---
 
 
-## Configuration
+#### Configuration
 > private-client - 192.168.0.10
 > jenkins-ec2 - 54.xx.xx.84
 
-### On jenkins-ec2
+#### On jenkins-ec2
 {% codeblock line_number:false highlight:true lang:"shell" %}
 $ ifconfig
 > ...
@@ -23,12 +23,12 @@ $ ifconfig
 
 <!--more-->
 
-### On private-client
+#### On private-client
 {% codeblock line_number:false highlight:true lang:"shell" %}
 $ ssh -i KEY_FILE -NfR 12345:localhost:22 ubuntu@54.xx.xx.84
 {% endcodeblock %}
 
-### Back to jenkins-ec2
+#### Back to jenkins-ec2
 Now we can login ```private-client``` on jenkins-ec2
 {% codeblock  line_number:false highlight:true lang:"shell" %}
 $ ssh user@localhost -p 12345
@@ -44,11 +44,11 @@ And run:
 # /etc/init.d/ssh restart
 {% endcodeblock %}
 
-### In docker container on jenkins-ec2
+#### In docker container on jenkins-ec2
 {% codeblock in container line_number:false highlight:true lang:shell %}
 $ ssh -i user@172.17.0.1 -p 12345
 {% endcodeblock %}
 
-### Reference
+#### Reference
 [SSH reverse tunnel]
 [SSH reverse tunnel]: https://toic.org/blog/2009/reverse-ssh-port-forwarding/
