@@ -48,3 +48,7 @@ i.fa.fa-search {
   color: #4285f4;
   height: 25px;
 }
+em.search-keyword {
+  color:red;
+  font-style: normal;
+}
