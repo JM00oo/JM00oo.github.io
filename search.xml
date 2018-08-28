@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search> 
+  
+    
+    <entry>
+      <title>Reverse tunnel with docker slave</title>
+      <link href="/2017/04/19/Reverse-tunnel-with-docker-slave/"/>
+      <url>/2017/04/19/Reverse-tunnel-with-docker-slave/</url>
+      <content type="html"><![CDATA[<h4 id="Configuration"><a href="#Configuration" class="headerlink" title="Configuration"></a>Configuration</h4><blockquote><p>private-client - 192.168.0.10<br>jenkins-ec2 - 54.xx.xx.84</p></blockquote><h4 id="On-jenkins-ec2"><a href="#On-jenkins-ec2" class="headerlink" title="On jenkins-ec2"></a>On jenkins-ec2</h4><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> ifconfig</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> ...</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> docker0   Link encap:Ethernet  HWaddr 02:42:34:49:99:84</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> inet addr:172.17.0.1  Bcast:0.0.0.0  Mask:255.255.0.0</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> ...</span></span><br></pre></td></tr></table></figure><a id="more"></a><h4 id="On-private-client"><a href="#On-private-client" class="headerlink" title="On private-client"></a>On private-client</h4><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> ssh -i KEY_FILE -NfR 12345:localhost:22 ubuntu@54.xx.xx.84</span></span><br></pre></td></tr></table></figure><h4 id="Back-to-jenkins-ec2"><a href="#Back-to-jenkins-ec2" class="headerlink" title="Back to jenkins-ec2"></a>Back to jenkins-ec2</h4><p>Now we can login <code>private-client</code> on jenkins-ec2<br><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> ssh user@localhost -p 12345</span></span><br></pre></td></tr></table></figure></p><p>However, for docker container in jenkins-ec can’t login <code>private-client</code>.<br>To enble that just need modify the configuration on <code>jenkins-ec2</code>:<br><figure class="highlight plain"><figcaption><span>/etc/ssh/sshd_config</span></figcaption><table><tr><td class="code"><pre><span class="line">GatewayPorts yes</span><br></pre></td></tr></table></figure><br>And run:<br><figure class="highlight shell"><figcaption><span>on jenkins-ec2</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> /etc/init.d/ssh restart</span></span><br></pre></td></tr></table></figure></p><h4 id="In-docker-container-on-jenkins-ec2"><a href="#In-docker-container-on-jenkins-ec2" class="headerlink" title="In docker container on jenkins-ec2"></a>In docker container on jenkins-ec2</h4><figure class="highlight shell"><figcaption><span>in container</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> ssh -i user@172.17.0.1 -p 12345</span></span><br></pre></td></tr></table></figure><h4 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h4><p>[SSH reverse tunnel]<br>[SSH reverse tunnel]: <a href="https://toic.org/blog/2009/reverse-ssh-port-forwarding/" target="_blank" rel="noopener">https://toic.org/blog/2009/reverse-ssh-port-forwarding/</a></p>]]></content>
+      
+      
+        <tags>
+            
+            <tag> docker </tag>
+            
+            <tag> ssh </tag>
+            
+            <tag> network </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    <entry>
+      <title>Git submodule notes</title>
+      <link href="/2017/04/16/git-submodule-notes/"/>
+      <url>/2017/04/16/git-submodule-notes/</url>
+      <content type="html"><![CDATA[<h4 id="Update-submodule"><a href="#Update-submodule" class="headerlink" title="Update submodule"></a>Update submodule</h4><p>First time need to init the submodule.<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git submodule update --recursive --remote --init PATH</span><br></pre></td></tr></table></figure><br>otherwise<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git submodule update --recursive --remote</span><br></pre></td></tr></table></figure></p><a id="more"></a><blockquote><p>In this post, I noted for setup/update git submodule. In some scenarios, we developed in a project, which depends on some other library. If we want to separately version controlling both of them, <code>git submodule</code> is a good tool for that.</p></blockquote><p>For example, I use Hexo to manage my blog, and in the repository there is a themes module to setup the blog theme.</p><h4 id="Add-submodule"><a href="#Add-submodule" class="headerlink" title="Add submodule"></a>Add submodule</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> BLOG_DIR</span><br><span class="line">git submodule add GIT_URL themes/THEME_NAME</span><br></pre></td></tr></table></figure><p>Suppose someone else update and push the submodule in the remote repository, we may need to update the submodule.</p><h4 id="Update-submodule-1"><a href="#Update-submodule-1" class="headerlink" title="Update submodule"></a>Update submodule</h4><p>First time need to init the submodule.<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git submodule update --recursive --remote --init PATH</span><br></pre></td></tr></table></figure><br>otherwise<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git submodule update --recursive --remote</span><br></pre></td></tr></table></figure></p><p>Sometimes, we may encounter some problem of adding submodule, i.e. <code>&#39;projectfolder&#39; already exists in the index</code>. Here is a way to fix it:</p><h4 id="Fix-issue-of-adding-submodule"><a href="#Fix-issue-of-adding-submodule" class="headerlink" title="Fix issue of adding submodule"></a>Fix issue of adding submodule</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git rm --cached projectfolder</span><br></pre></td></tr></table></figure><p>References:<br><a href="http://bit.ly/2pF1Jw6" target="_blank" rel="noopener">Git submodule</a><br><a href="http://bit.ly/2ojiMm4" target="_blank" rel="noopener">Update submodule</a><br><a href="http://bit.ly/2ppm496" target="_blank" rel="noopener">Fix submodule issue</a></p>]]></content>
+      
+      
+        <tags>
+            
+            <tag> git </tag>
+            
+            <tag> submodule </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    <entry>
+      <title>Jenkins slave setup notes</title>
+      <link href="/2017/04/12/jenkins-slave/"/>
+      <url>/2017/04/12/jenkins-slave/</url>
+      <content type="html"><![CDATA[<p>In this article, I introduced how to setup a docker-host based Jenkins slave step by step from installing docker. It includes some trick of how to run docker with parameters.</p><a id="more"></a><h2 id="Install-Docker"><a href="#Install-Docker" class="headerlink" title="Install Docker"></a>Install Docker</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ sudo apt-get install \</span><br><span class="line">    apt-transport-https \</span><br><span class="line">    ca-certificates \</span><br><span class="line">    curl \</span><br><span class="line">    software-properties-common</span><br><span class="line"></span><br><span class="line">$ curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -</span><br><span class="line"></span><br><span class="line">$ sudo apt-key fingerprint 0EBFCD88</span><br><span class="line"></span><br><span class="line">$ sudo add-apt-repository \</span><br><span class="line">   <span class="string">"deb [arch=amd64] https://download.docker.com/linux/ubuntu \</span></span><br><span class="line"><span class="string">   <span class="variable">$(lsb_release -cs)</span> \</span></span><br><span class="line"><span class="string">   stable"</span></span><br><span class="line"></span><br><span class="line">$ sudo apt-get update</span><br><span class="line"></span><br><span class="line">$ sudo apt-get install docker-ce</span><br></pre></td></tr></table></figure><p>Ref: <a href="https://docs.docker.com/engine/installation/linux/ubuntu/" target="_blank" rel="noopener">Docker install guide</a></p><h2 id="Modify-docker-config"><a href="#Modify-docker-config" class="headerlink" title="Modify docker config"></a>Modify docker config</h2><p>Add config<br><figure class="highlight bash"><figcaption><span>/etc/default/docker</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">DOCKER_OPTS=<span class="string">"-H tcp://172.31.16.61:2375 --live-restore"</span></span><br></pre></td></tr></table></figure></p><p>Modify<br><figure class="highlight bash"><figcaption><span>/lib/systemd/system/docker.service</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">EnvironmentFile=-/etc/default/docker</span><br><span class="line">ExecStart=/usr/bin/dockerd -H fd:// <span class="variable">$DOCKER_OPTS</span></span><br></pre></td></tr></table></figure></p><p>Run<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ service docker restart</span><br></pre></td></tr></table></figure></p><h2 id="Install-Java"><a href="#Install-Java" class="headerlink" title="Install Java"></a>Install Java</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo apt-get install default-jre</span><br><span class="line">sudo apt-get install default-jdk</span><br></pre></td></tr></table></figure><p>Ref: <a href="https://www.digitalocean.com/community/tutorials/how-to-install-java-on-ubuntu-with-apt-get" target="_blank" rel="noopener">Install Java</a></p>]]></content>
+      
+      <categories>
+          
+          <category> Tech </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> docker </tag>
+            
+            <tag> CI/CD </tag>
+            
+            <tag> Jenkins </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    <entry>
+      <title>Hello World</title>
+      <link href="/2017/04/10/hello-world/"/>
+      <url>/2017/04/10/hello-world/</url>
+      <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p><a id="more"></a><h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p><h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p><h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p><h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>]]></content>
+      
+      <categories>
+          
+          <category> hello-world </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> hello-world </tag>
+            
+        </tags>
+      
+    </entry>
+    
+  
+  
+</search>
